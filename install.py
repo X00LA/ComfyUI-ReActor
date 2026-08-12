@@ -90,12 +90,13 @@ with open(req_file) as file:
         package_version = None
         try:
             package = package.strip()
+            package_name = package
             if "==" in package:
-                package_version = package.split('==')[1]
+                package_name, package_version = package.split('==')
             elif ">=" in package:
-                package_version = package.split('>=')[1]
+                package_name, package_version = package.split('>=')
                 strict = False
-            if not is_installed(package,package_version,strict):
+            if not is_installed(package_name,package_version,strict):
                 run_pip(package)
         except Exception as e:
             print(e)
